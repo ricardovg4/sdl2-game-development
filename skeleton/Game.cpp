@@ -1,40 +1,31 @@
 #include "Game.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
+
 #include <iostream>
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height,
                 bool fullscreen) {
-
   int flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
 
-  if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-    std::cout << "SDL init sucess"
-              << "\n";
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) return false;
+  std::cout << "SDL init sucess"
+            << "\n";
 
-    window = SDL_CreateWindow(title, xpos, ypos, width, height, fullscreen);
+  window = SDL_CreateWindow(title, xpos, ypos, width, height, fullscreen);
 
-    if (window) {
-      std::cout << "window created"
-                << "\n";
+  if (!window) return false;
+  std::cout << "window created"
+            << "\n";
+  renderer = SDL_CreateRenderer(window, -1, 0);
 
-      renderer = SDL_CreateRenderer(window, -1, 0);
-
-      if (renderer) {
-        std::cout << "renderer created"
-                  << "\n";
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
+  if (!renderer) return false;
+  std::cout << "renderer created"
+            << "\n";
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
   running = true;
 
@@ -59,12 +50,12 @@ void Game::handleEvents() {
 
   if (SDL_PollEvent(&event)) {
     switch (event.type) {
-    case SDL_QUIT:
-      running = false;
-      break;
+      case SDL_QUIT:
+        running = false;
+        break;
 
-    default:
-      break;
+      default:
+        break;
     }
   }
 }
