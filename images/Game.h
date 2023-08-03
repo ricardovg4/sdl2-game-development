@@ -5,14 +5,10 @@
 class Game {
   SDL_Window* window;
   SDL_Renderer* renderer;
-  
-  SDL_Texture* texture;
-  SDL_Rect sourceRectangle;
-  SDL_Rect destinationRectangle;
 
   bool running;
 
-public:
+ public:
   bool init(const char* title, int xpos, int ypos, int width, int height,
             bool fullscreen);
   void handleEvents();

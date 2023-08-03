@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall
 # OBJECTS=main.o
-SOURCES=main.cpp Game.cpp
+SOURCES=main.cpp Game.cpp TextureManager.cpp
 BIN=./bin/
 LIBS=-l SDL2 -l SDL2_image
 DEBUG_FLAG=-g

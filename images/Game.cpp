@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "TextureManager.h"
+
 bool Game::init(const char* title, int xpos, int ypos, int width, int height,
                 bool fullscreen) {
   int flags = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
@@ -27,18 +29,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height,
 
   running = true;
 
-  SDL_Surface* tempSurface = IMG_Load("assets/animate-alpha.png");
-  texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-  SDL_FreeSurface(tempSurface);
-
-  // SDL_QueryTexture(texture, NULL, NULL, &sourceRectangle.w,
-  // &sourceRectangle.h);
-  sourceRectangle.w = 128;
-  sourceRectangle.h = 82;
-  destinationRectangle.x = sourceRectangle.x = 0;
-  destinationRectangle.y = sourceRectangle.y = 0;
-  destinationRectangle.w = sourceRectangle.w;
-  destinationRectangle.h = sourceRectangle.h;
+  // load
+  if (!TextureManager::getInstance()->load("assets/animate-alpha.png",
+                                           "animate", renderer)) {
+    return false;
+  }
 
   return true;
 }
@@ -46,16 +41,18 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height,
 void Game::render() {
   SDL_RenderClear(renderer);
 
-  // SDL_RenderCopy(renderer, texture, &sourceRectangle, &destinationRectangle);
-  SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle,
-                   0, 0, SDL_FLIP_HORIZONTAL);
+  // draw
+  TextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
+  // TextureManager::getInstance()->drawFrame("animate", 0, 0, 128, 82, 1,
+  // frame,
+  //                                          renderer);
 
   SDL_RenderPresent(renderer);
 }
 
 void Game::update() {
-  sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-  std::cout << sourceRectangle.x << "\n";
+  // sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+  // frame = int(((SDL_GetTicks() / 100) % 6));
 }
 
 void Game::clean() {
