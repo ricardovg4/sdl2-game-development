@@ -5,7 +5,12 @@
 
 #include <iostream>
 
+#include "Enemy.h"
+#include "LoaderParams.h"
+#include "Player.h"
 #include "TextureManager.h"
+
+Game* Game::instance = nullptr;
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height,
                 bool fullscreen) {
@@ -34,17 +39,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height,
                                            "animate", renderer)) {
     return false;
   }
-  go = new GameObject();
-  player = new GameObject();
-  enemy = new GameObject();
 
-  go->load(100, 100, 128, 82, "animate");
-  player->load(300, 300, 128, 82, "animate");
-  enemy->load(0, 0, 128, 82, "animate");
-
-  GameObjects.push_back(go);
-  GameObjects.push_back(player);
-  GameObjects.push_back(enemy);
+  GameObjects.push_back(
+      new Player(new LoaderParams(100, 100, 128, 82, "animate")));
+  GameObjects.push_back(
+      new Enemy(new LoaderParams(100, 100, 128, 82, "animate")));
 
   return true;
 }
@@ -55,7 +54,7 @@ void Game::render() {
   // loop through GameObjects and drwa them
   for (std::vector<GameObject*>::size_type i = 0; i != GameObjects.size();
        i++) {
-    GameObjects[i]->draw(renderer);
+    GameObjects[i]->draw();
   }
 
   // go->draw(renderer);

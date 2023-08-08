@@ -1,13 +1,10 @@
 #include "Enemy.h"
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_timer.h>
 
-void Enemy::load(int x, int y, int width, int height, std::string textureId) {
-  GameObject::load(x, y, width, height, textureId);
-}
+Enemy::Enemy(const LoaderParams* params) : SDLGameObject(params){};
 
-void Enemy::draw(SDL_Renderer* renderer) { GameObject::draw(renderer); }
+void Enemy::draw() { SDLGameObject::draw(); }
 
 void Enemy::update() {
   y += 1;

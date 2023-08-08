@@ -2,12 +2,13 @@
 
 #include <string>
 
-#include "GameObject.h"
+#include "SDLGameObject.h"
 
-class Player : public GameObject {
+class Player : public SDLGameObject {
  public:
-  void load(int x, int y, int width, int height, std::string textureId);
-  void draw(SDL_Renderer* renderer);
+  Player(const LoaderParams* params);
+
+  void draw();
   void update();
   void clean();
 };

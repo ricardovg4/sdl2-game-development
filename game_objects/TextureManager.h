@@ -7,9 +7,9 @@ class TextureManager {
   TextureManager() = default;
   ~TextureManager();
 
- public:
   static TextureManager* instance;
 
+ public:
   static TextureManager* getInstance() {
     if (instance == nullptr) {
       instance = new TextureManager();

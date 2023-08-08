@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall
 # OBJECTS=main.o
-SOURCES=main.cpp Game.cpp TextureManager.cpp GameObject.cpp Player.cpp
+SOURCES=main.cpp Game.cpp TextureManager.cpp GameObject.cpp Player.cpp Enemy.cpp LoaderParams.h SDLGameObject.cpp
 BIN=./bin/
 LIBS=-l SDL2 -l SDL2_image
 DEBUG_FLAG=-g
