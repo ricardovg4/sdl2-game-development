@@ -2,10 +2,12 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_keyboard.h>
 
 #include <iostream>
 
 #include "Enemy.h"
+#include "InputHandler.h"
 #include "LoaderParams.h"
 #include "Player.h"
 #include "TextureManager.h"
@@ -57,15 +59,6 @@ void Game::render() {
     GameObjects[i]->draw();
   }
 
-  // go->draw(renderer);
-  // player->draw(renderer);
-
-  // draw
-  // TextureManager::getInstance()->draw("animate", 0, 0, 128, 82, renderer);
-  // TextureManager::getInstance()->drawFrame("animate", 0, 0, 128, 82, 1,
-  // frame,
-  //                                          renderer);
-
   SDL_RenderPresent(renderer);
 }
 
@@ -74,10 +67,6 @@ void Game::update() {
        i++) {
     GameObjects[i]->update();
   }
-  // go->update();
-  // player->update();
-  // sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-  // frame = int(((SDL_GetTicks() / 100) % 6));
 }
 
 void Game::clean() {
@@ -88,17 +77,8 @@ void Game::clean() {
   SDL_Quit();
 }
 
+void Game::quit() { running = false; }
+
 void Game::handleEvents() {
-  SDL_Event event;
-
-  if (SDL_PollEvent(&event)) {
-    switch (event.type) {
-      case SDL_QUIT:
-        running = false;
-        break;
-
-      default:
-        break;
-    }
-  }
+  InputHandler::getInstance()->update();
 }

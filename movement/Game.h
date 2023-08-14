@@ -1,8 +1,5 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_video.h>
 
-#include <variant>
 #include <vector>
 
 #include "GameObject.h"
@@ -39,6 +36,7 @@ class Game {
   void handleEvents();
   void update();
   void render();
+  void quit();
   void clean();
 
   bool getRunning() { return running; };
